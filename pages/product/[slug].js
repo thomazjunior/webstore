@@ -61,14 +61,14 @@ const ProductDetails = ({ product, products }) => {
             </p>
           </div>
           <div className="buttons">
-            <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Add to Cart</button>
-            <button type="button" className="buy-now" onClick={handleBuyNow}>Buy Now</button>
+            <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Adicionar ao carrinho</button>
+            <button type="button" className="buy-now" onClick={handleBuyNow}>Comprar</button>
           </div>
         </div>
       </div>
 
       <div className="maylike-products-wrapper">
-          <h2>You may also like</h2>
+          <h2>Você também pode gostar</h2>
           <div className="marquee">
             <div className="maylike-products-container track">
               {products.map((item) => (
