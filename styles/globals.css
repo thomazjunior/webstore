@@ -7,8 +7,14 @@ body, * {
   box-sizing: border-box;
 
 }
+
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #D3D3D3;
+  border-radius: 5px;
 }
 
 a {
