@@ -11,9 +11,8 @@ import { urlFor } from '../lib/client';
     const { image, name, slug, price } = product;
 
   return (
-    <div>
       <Link href={`/product/${slug.current}`}>
-        <div className="product-card">
+        <div>
           <img 
             src={urlFor(image && image[0])}
             width={225}
@@ -22,9 +21,8 @@ import { urlFor } from '../lib/client';
           />
           <p className="product-name">{name}</p>
           <p className="product-price">{price.toFixed(2)}€</p>
-        </div>
+          </div>
       </Link>
-    </div>
   )
 }
 
