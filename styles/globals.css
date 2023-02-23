@@ -8,6 +8,24 @@ body, * {
 
 }
 
+.category {
+  display: block;
+  list-style-type: disc;
+  margin-top: 1em;
+  margin-bottom: 1 em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
+  font-size: 22px;
+  font-style: italic;
+  color: black;
+}
+
+.category_item {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
 ::-webkit-scrollbar {
   width: 15px;
 }
@@ -24,11 +42,17 @@ a {
 
 .main-container{
 margin: auto;
-width: 95%;
+width: 100%;
 background-color: rgb(240, 242, 254);
+display: flex;
 
 }
 
+.sidebar {
+  background-color: rgb(253, 253, 255);
+  min-width: 250px;
+  min-height: 75vh;
+}
 
 .navbar-container{
   display: flex;
@@ -324,6 +348,7 @@ text-align: end;
   gap: 10px;
   justify-content: center;
   background-color: #324d67;
+  position: relative;
 
 }
 .footer-container .icons{

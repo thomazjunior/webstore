@@ -7,16 +7,22 @@ import { client } from '../lib/client';
 import { Product, FooterBanner, HeroBanner } from '../components';
 import { useContext, useEffect } from 'react';
 import Search from '../components/Search'
+import { FilterContext, FilterDispatchContext } from '../components/context/FiltersContext';
 
 const Home = ({ products, bannerData }) => {
-
-  const [name, setName] = useState();
+  const filters = React.useContext(FilterContext);
+  const [name, setName] = useState(filters.filterName);
   const [currentProducts, setCurrentProducts] = useState(products);
+
 
   useEffect(() => {
     setCurrentProducts(() => products)
   }, [products])
-  
+
+  useEffect(() => {
+    console.log("...........")
+    setName(filters.filterName)
+  }, [filters.filterName])
   
   useEffect(() => {
 
@@ -68,9 +74,7 @@ const Home = ({ products, bannerData }) => {
   <div>
   
     <div className="products-heading">
-      <h2>Os melhores vinhos, à distancia de um click!</h2>
     </div>
-    <Search  handleChange={handleChange} />
     <div className="products-container">
       {currentProducts?.map((product) => <Product key={product._id} product={product} />)}
     </div>
