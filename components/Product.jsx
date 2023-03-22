@@ -13,7 +13,7 @@ import { urlFor } from '../lib/client';
   return (
       <Link href={`/product/${slug.current}`}>
         <div>
-          <img 
+          <img
             src={urlFor(image && image[0])}
             width={225}
             height={225}

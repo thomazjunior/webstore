@@ -1,35 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { urlFor } from "../lib/client";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { client } from "../lib/client";
+import { useEffect } from "react";
+import { useStateContext } from '../context/StateContext'
 import {
-  InputBase,
-} from '@mui/material';
-
-import { client } from '../lib/client';
-import { Product, FooterBanner, HeroBanner } from '../components';
-import { useContext, useEffect } from 'react';
-import Search from '../components/Search'
-import { FilterContext, FilterDispatchContext } from '../components/context/FiltersContext';
+  FilterContext,
+} from "../components/context/FiltersContext";
+import { Box } from "@mui/system";
+import Link from "next/link";
 
 const Home = ({ products, bannerData }) => {
   const filters = React.useContext(FilterContext);
-  const [name, setName] = useState(filters.filterName);
   const [currentProducts, setCurrentProducts] = useState(products);
-
-
-  useEffect(() => {
-    setCurrentProducts(() => products)
-  }, [products])
+  const [vinhosBranco, setVinhosBranco] = useState();
+  const [vinhosTinto, setVinhosTinto] = useState();
+  const [azeite, setAzeite] = useState();
 
   useEffect(() => {
-    console.log("...........")
-    setName(filters.filterName)
-  }, [filters.filterName])
-  
-  useEffect(() => {
-
-    const fetchData = async () => {
+    const fetchVinhosBranco = async () => {
+      const type = "branco";
       try {
-        let gQuery = '*[_type == "product"';
-      /**   if (category !== 'all') {
+        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+
+        const vinhosBranco = await client.fetch(gQuery);
+        setVinhosBranco(() => vinhosBranco);
+
+        /**   if (category !== 'all') {
           gQuery += ` && category match "${category}" `;
         }
         if (query !== 'all') {
@@ -49,39 +47,48 @@ const Home = ({ products, bannerData }) => {
           if (sort === 'highest') order = '| order(price desc)';
           if (sort === 'toprated') order = '| order(rating desc)';
         } */
-
-        if (name) {
-          gQuery += ` && name match "${name}*"`;
-        }
-
-        gQuery+=`]`;
-       const newproducts = await client.fetch(gQuery);
-       setCurrentProducts(() => newproducts);
-      } catch (err) {
-       
-      }
+      } catch (err) {}
     };
 
-    fetchData();
-  }, [name]);
+    fetchVinhosBranco();
+  }, []);
 
-  function handleChange(name) {
-    setName(() => name)
-  }
-  
+  useEffect(() => {
+    const fetchVinhosTinto = async () => {
+      const type = "tinto";
+      try {
+        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+
+        const vinhosTinto = await client.fetch(gQuery);
+        setVinhosTinto(() => vinhosTinto);
+      } catch (err) {}
+    };
+    fetchVinhosTinto();
+  }, []);
+
+  useEffect(() => {
+    const fetchAzeite = async () => {
+      const type = "azeite";
+      try {
+        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+
+        const azeite = await client.fetch(gQuery);
+        setAzeite(() => azeite);
+      } catch (err) {}
+    };
+    fetchAzeite();
+  }, []);
+
   return (
+    <Box sx={{width: 1}}>
+      {vinhosTinto && <CarouselContainer data={vinhosTinto} title={"Vinhos Tinto"}/>}
 
-  <div>
-  
-    <div className="products-heading">
-    </div>
-    <div className="products-container">
-      {currentProducts?.map((product) => <Product key={product._id} product={product} />)}
-    </div>
+      {vinhosBranco && <CarouselContainer data={vinhosBranco} title={"Vinhos Branco"}/>}
 
-
-  </div>
-)};
+      {azeite && <CarouselContainerAzeite data={azeite} title={"Azeites"}/>}
+    </Box>
+  );
+};
 
 export const getServerSideProps = async () => {
   const query = '*[_type == "product"]';
@@ -91,8 +98,132 @@ export const getServerSideProps = async () => {
   const bannerData = await client.fetch(bannerQuery);
 
   return {
-    props: { products, bannerData }
-  }
-}
+    props: { products, bannerData },
+  };
+};
+
+
+const Card = ({ product }) => {
+  const { image, name, slug, price } = product;
+  const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
+  return (
+    <Link href={`/product/${slug.current}`}>
+      <li className="card">
+        <img
+          src={urlFor(image && image[0])}
+          width={100}
+          height={100}
+          className="product-image"
+        />
+        <p className="product-name">{name}</p>
+        <p className="product-price">{price.toFixed(2)}€</p>
+        <button type="button" className="add-to-cart" onClick={() => onAdd(product, 1)}>Adicionar ao carrinho</button>
+      </li>
+    </Link>
+  );
+};
+
+const CarouselContainer = (props) => {
+  const [moveClass, setMoveClass] = useState("");
+  const [carouselItems, setCarouselItems] = useState(props?.data);
+
+  console.log(carouselItems.length)
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--num", carouselItems.length);
+  }, [carouselItems]);
+
+  const handleAnimationEnd = () => {
+    if (moveClass === "prev") {
+      shiftNext([...carouselItems]);
+    } else if (moveClass === "next") {
+      shiftPrev([...carouselItems]);
+    }
+    setMoveClass("");
+  };
+
+  const shiftPrev = (copy) => {
+    let lastcard = copy.pop();
+    copy.splice(0, 0, lastcard);
+    setCarouselItems(copy);
+  };
+
+  const shiftNext = (copy) => {
+    let firstcard = copy.shift();
+    copy.splice(copy.length, 0, firstcard);
+    setCarouselItems(copy);
+  };
+
+  return (
+    <div className="carouselwrapper module-wrapper">
+      <div className="ui">
+        <button onClick={() => setMoveClass("next")} className="prev">
+          <span className="material-icons"><ArrowBackIosNewIcon/></span>
+        </button>
+        <button onClick={() => setMoveClass("prev")} className="next">
+          <span className="material-icons"><ArrowForwardIosIcon/></span>
+        </button>
+      </div>
+      <h1>{props.title}</h1>
+      <ul
+        onAnimationEnd={handleAnimationEnd}
+        className={`${moveClass} carousel`}
+      >
+        {carouselItems.map((product, index) => (
+          <Card key={index} product={product} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const CarouselContainerAzeite = (props) => {
+  const [moveClass, setMoveClass] = useState("");
+  const [carouselItems, setCarouselItems] = useState(props?.data);
+
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--num", carouselItems.length < 10 ? 10 : carouselItems.length);
+  }, [carouselItems]);
+
+  const handleAnimationEnd = () => {
+    if (moveClass === "prev") {
+      shiftNext([...carouselItems]);
+    } else if (moveClass === "next") {
+      shiftPrev([...carouselItems]);
+    }
+    setMoveClass("");
+  };
+
+  const shiftPrev = (copy) => {
+    let lastcard = copy.pop();
+    copy.splice(0, 0, lastcard);
+    setCarouselItems(copy);
+  };
+
+  const shiftNext = (copy) => {
+    let firstcard = copy.shift();
+    copy.splice(copy.length, 0, firstcard);
+    setCarouselItems(copy);
+  };
+
+  return (
+    <>
+    
+<h1>{props.title}</h1>
+    <Box sx={{ml: 50, backgroundColor: "#fff"}} >
+      <ul
+        onAnimationEnd={handleAnimationEnd}
+        className={`carousel`}
+      >
+        
+        {carouselItems.map((product, index) => (
+          <Card key={index} product={product} />
+        ))}
+      </ul>
+    </Box>
+    </>
+  );
+};
 
 export default Home;
