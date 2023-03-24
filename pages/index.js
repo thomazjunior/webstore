@@ -10,6 +10,7 @@ import {
 } from "../components/context/FiltersContext";
 import { Box } from "@mui/system";
 import Link from "next/link";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const Home = ({ products, bannerData }) => {
   const filters = React.useContext(FilterContext);
@@ -108,7 +109,9 @@ const Card = ({ product }) => {
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
   return (
     <Link href={`/product/${slug.current}`}>
+       <Box sx={{display: 'block', justifyContent: 'space-between'}}>
       <li className="card">
+        <Box sx={{minHeight: 210}}>
         <img
           src={urlFor(image && image[0])}
           width={100}
@@ -116,9 +119,15 @@ const Card = ({ product }) => {
           className="product-image"
         />
         <p className="product-name">{name}</p>
-        <p className="product-price">{price.toFixed(2)}€</p>
-        <button type="button" className="add-to-cart" onClick={() => onAdd(product, 1)}>Adicionar ao carrinho</button>
-      </li>
+          <p className="product-price">{price.toFixed(2)}€</p>
+        </Box>
+        <Box>
+        <div className="buttons">
+            <button type="button" className="buy-now" onClick={() => null}>Comprar</button>
+          </div>
+          </Box>
+        </li>
+        </Box>
     </Link>
   );
 };
@@ -178,34 +187,9 @@ const CarouselContainer = (props) => {
 };
 
 const CarouselContainerAzeite = (props) => {
-  const [moveClass, setMoveClass] = useState("");
   const [carouselItems, setCarouselItems] = useState(props?.data);
 
 
-  useEffect(() => {
-    document.documentElement.style.setProperty("--num", carouselItems.length < 10 ? 10 : carouselItems.length);
-  }, [carouselItems]);
-
-  const handleAnimationEnd = () => {
-    if (moveClass === "prev") {
-      shiftNext([...carouselItems]);
-    } else if (moveClass === "next") {
-      shiftPrev([...carouselItems]);
-    }
-    setMoveClass("");
-  };
-
-  const shiftPrev = (copy) => {
-    let lastcard = copy.pop();
-    copy.splice(0, 0, lastcard);
-    setCarouselItems(copy);
-  };
-
-  const shiftNext = (copy) => {
-    let firstcard = copy.shift();
-    copy.splice(copy.length, 0, firstcard);
-    setCarouselItems(copy);
-  };
 
   return (
     <>
@@ -213,8 +197,7 @@ const CarouselContainerAzeite = (props) => {
 <h1>{props.title}</h1>
     <Box sx={{ml: 50, backgroundColor: "#fff"}} >
       <ul
-        onAnimationEnd={handleAnimationEnd}
-        className={`carousel`}
+        className={`carouselAzeite`}
       >
         
         {carouselItems.map((product, index) => (
