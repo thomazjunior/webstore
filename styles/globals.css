@@ -6,7 +6,7 @@ body, * {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   box-sizing: border-box;
 
-}
+}ss
 
 .category {
   display: block;
@@ -56,11 +56,18 @@ display: flex;
   display: flex;
   justify-content: space-between;
   position: relative;
-  background-color: #324d67;
-  height: 80px;
+  background: rgb(108,106,106);
+  background: linear-gradient(90deg, rgba(108,106,106,1) 0%, rgba(196,69,69,0.8786108193277311) 45%, rgba(184,178,178,0.8477984943977591) 100%);
+  height: 100px;
   align-items: center;
 }
 
+.logo {
+  font-size: 48px;
+  font-family: 'Courier New', Courier, monospace;
+  font-style: var(--color-ui-hover);
+  font-weight: 550;
+}
 .navebar-browser {
   font-size: 20px;
   display: flex;
@@ -74,6 +81,8 @@ display: flex;
   color: white;
   font-size: 30px;
 }
+
+
 
 
 .marquee-text{
@@ -105,7 +114,7 @@ display: flex;
 }
 
  span.text-red {
-    -webkit-text-stroke: 1px #f02d34;
+    -webkit-text-stroke: 1px #c2272c;
     margin-left: 6px;
 }
 .logo{
@@ -259,7 +268,8 @@ text-align: end;
   font-weight: 200;
 }
 .footer-banner-container{
-  background-color: #ebebeb;
+  background: rgb(108,106,106);
+  background: linear-gradient(90deg, rgba(108,106,106,1) 0%, rgba(189,81,81,0.8786108193277311) 35%, rgba(213,209,209,0.8758096988795518) 100%);
   border-radius: 15px;
   position: relative;
   height: 400px;
@@ -277,7 +287,7 @@ text-align: end;
   border-radius: 15px;
   padding: 10px 16px;
   background-color: white;
-  color: red;
+  color: gray;
   border: none;
   margin-top: 40px;
   font-size: 18px;
@@ -345,8 +355,10 @@ text-align: end;
   align-items: center;
   gap: 10px;
   justify-content: center;
-  background-color: #324d67;
+  background: rgb(108,106,106);
+background: linear-gradient(90deg, rgba(108,106,106,1) 0%, rgba(189,81,81,0.8786108193277311) 35%, rgba(130,123,123,0.8477984943977591) 100%);
   position: relative;
+  max-height: 100px;
 
 }
 .footer-container .icons{
@@ -814,31 +826,32 @@ margin-top: 160px;
 }
 
 
- :root {
-	 --up: 3;
-	 --card-margin: 12px;
-	 --card-shadow: rgba(46, 49, 52, .4);
-	 --color-white: #fff;
-	 --color-lightgrey: #fff;
-	 --color-ui: #f1e6e6;
-	 --color-ui-hover: #343030;
-	 --cardWidth: 300px;
-	 --carouselWidth: 10000px;
-	 --carouselLeftMargin: calc(2vw - var(--cardWidth));
-}
- @media screen and (max-width: 900px) {
-	 :root {
-		/*basically mobile*/
-		 --up: 1;
-	}
+:root {
+  --up: 3;
+  --card-margin: 12px;
+  --card-shadow: rgba(46, 49, 52, .4);
+  --color-white: #fff;
+  --color-lightgrey: #ccc;
+  --color-ui: #999;
+  --color-ui-hover: #666;
+  --cardWidth: calc(96vw/var(--up));
+  --carouselVinhosTinto: calc(var(--cardWidth) * var(--vinhosTinto));
+  --carouselVinhosBranco: calc(var(--cardWidth) * var(--vinhosBranco));
+  --carouselCadao: calc(var(--cardWidth) * var(--cadao));
+  --carouselAzeite: calc(var(--cardWidth) * var(--azeite));
+  --carouselLeftMargin: calc(2vw - var(--cardWidth));
+  
+  @media screen and (max-width: 900px) { /*basically mobile*/
+    --up: 1;
+  }
 }
  .carouselwrapper {
 	 overflow: hidden;
 	 background: var(--color-lightgrey);
 	 position: relative;
 }
- .carousel {
-	 width: var(--carouselWidth);
+ .carouselTinto {
+	 width: var(--carouselVinhosTinto);
 	 margin: 0 0 0 var(--carouselLeftMargin);
 	 display: flex;
 	 flex-wrap: wrap;
@@ -846,16 +859,95 @@ margin-top: 160px;
 	 padding: 0;
 }
 
-
-.carouselAzeite {
-
-  margin: 0 0 0 var(--carouselLeftMargin );
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin-right: 50px;
+.carouselTinto.prev {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: prev;
+}
+.carouselTinto.next {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: next;
+}
+.carouselTinto li {
+  padding: 20px;
+  text-align: center;
+  width: calc(var(--cardWidth) - var(--card-margin) * 2);
+  box-sizing: border-box;
 }
 
+.carouselBranco {
+  width: var(--carouselVinhosBranco);
+  margin: 0 0 0 var(--carouselLeftMargin);
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.carouselBranco.prev {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: prev;
+}
+.carouselBranco.next {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: next;
+}
+.carouselBranco li {
+  padding: 20px;
+  text-align: center;
+  width: calc(var(--cardWidth) - var(--card-margin) * 2);
+  box-sizing: border-box;
+}
+
+
+.carouselCadao {
+  width: var(--carouselCadao);
+  margin: 0 0 0 var(--carouselLeftMargin);
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.carouselCadao.prev {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: prev;
+}
+.carouselCadao.next {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: next;
+}
+.carouselCadao li {
+  padding: 20px;
+  text-align: center;
+  width: calc(var(--cardWidth) - var(--card-margin) * 2);
+  box-sizing: border-box;
+}
+
+.carouselAzeite {
+  width: var(--carouselCadao);
+  margin: 0 0 0 var(--carouselLeftMargin);
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.carouselAzeite.prev {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: prev;
+}
+.carouselAzeite.next {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: next;
+}
 .carouselAzeite li {
   padding: 20px;
   text-align: center;
@@ -863,22 +955,10 @@ margin-top: 160px;
   box-sizing: border-box;
 }
 
- .carousel.prev {
-	 animation-duration: 0.6s;
-	 animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
-	 animation-name: prev;
-}
- .carousel.next {
-	 animation-duration: 0.6s;
-	 animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
-	 animation-name: next;
-}
- .carousel li {
-	 padding: 20px;
-	 text-align: center;
-	 width: calc(var(--cardWidth) - var(--card-margin) * 2);
-	 box-sizing: border-box;
-}
+
+
+
+
  .ui {
 	 position: absolute;
 	 top: 50%;
@@ -915,7 +995,9 @@ margin-top: 160px;
 	 border-radius: 4px;
 	 margin: var(--card-margin);
 	 background: rgb(248, 248, 247);
+   min-height: 350px;
 }
+
  .card .material-icons {
 	 font-size: 4.8rem;
 }

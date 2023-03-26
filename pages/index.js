@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { urlFor } from "../lib/client";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { client } from "../lib/client";
 import { useEffect } from "react";
-import { useStateContext } from '../context/StateContext'
-import {
-  FilterContext,
-} from "../components/context/FiltersContext";
+import { useStateContext } from "../context/StateContext";
+import { FilterContext } from "../components/context/FiltersContext";
 import { Box } from "@mui/system";
 import Link from "next/link";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
@@ -17,6 +15,7 @@ const Home = ({ products, bannerData }) => {
   const [currentProducts, setCurrentProducts] = useState(products);
   const [vinhosBranco, setVinhosBranco] = useState();
   const [vinhosTinto, setVinhosTinto] = useState();
+  const [cadao, setCadao] = useState();
   const [azeite, setAzeite] = useState();
 
   useEffect(() => {
@@ -68,6 +67,19 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   useEffect(() => {
+    const fetchCadao = async () => {
+      const type = "cadão";
+      try {
+        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+
+        const cadao = await client.fetch(gQuery);
+        setCadao(() => cadao);
+      } catch (err) {}
+    };
+    fetchCadao();
+  }, []);
+
+  useEffect(() => {
     const fetchAzeite = async () => {
       const type = "azeite";
       try {
@@ -81,12 +93,15 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   return (
-    <Box sx={{width: 1}}>
-      {vinhosTinto && <CarouselContainer data={vinhosTinto} title={"Vinhos Tinto"}/>}
-
-      {vinhosBranco && <CarouselContainer data={vinhosBranco} title={"Vinhos Branco"}/>}
-
-      {azeite && <CarouselContainerAzeite data={azeite} title={"Azeites"}/>}
+    <Box sx={{ width: 1, display: "block" }}>
+      {vinhosTinto && (
+        <CarouselContainer data={vinhosTinto} title={"Vinhos Tinto"} />
+      )}
+      {vinhosBranco && (
+        <CarouselContainer data={vinhosBranco} title={"Vinhos Branco"} />
+      )}
+      {cadao && <CarouselContainer data={cadao} title={"Cadão"} />}
+      {azeite && <CarouselContainer data={azeite} title={"Azeite"} />}
     </Box>
   );
 };
@@ -103,31 +118,32 @@ export const getServerSideProps = async () => {
   };
 };
 
-
 const Card = ({ product }) => {
   const { image, name, slug, price } = product;
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
   return (
     <Link href={`/product/${slug.current}`}>
-       <Box sx={{display: 'block', justifyContent: 'space-between'}}>
-      <li className="card">
-        <Box sx={{minHeight: 210}}>
-        <img
-          src={urlFor(image && image[0])}
-          width={100}
-          height={100}
-          className="product-image"
-        />
-        <p className="product-name">{name}</p>
-          <p className="product-price">{price.toFixed(2)}€</p>
-        </Box>
-        <Box>
-        <div className="buttons">
-            <button type="button" className="buy-now" onClick={() => null}>Comprar</button>
-          </div>
+      <Box sx={{ display: "block", justifyContent: "space-between" }}>
+        <li className="card">
+          <Box sx={{ minHeight: 210 }}>
+            <img
+              src={urlFor(image && image[0])}
+              width={100}
+              height={100}
+              className="product-image"
+            />
+            <p className="product-name">{name}</p>
+            <p className="product-price">{price.toFixed(2)}€</p>
+          </Box>
+          <Box>
+            <div className="buttons">
+              <button type="button" className="buy-now" onClick={() => null}>
+                Comprar
+              </button>
+            </div>
           </Box>
         </li>
-        </Box>
+      </Box>
     </Link>
   );
 };
@@ -136,10 +152,39 @@ const CarouselContainer = (props) => {
   const [moveClass, setMoveClass] = useState("");
   const [carouselItems, setCarouselItems] = useState(props?.data);
 
-  console.log(carouselItems.length)
+  const name =
+    props.title == "Vinhos Tinto"
+      ? "carouselTinto"
+      : props.title == "Vinhos Branco"
+      ? "carouselBranco"
+      : props.title == "Cadão"
+      ? "carouselCadao"
+      : "carouselAzeite";
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--num", carouselItems.length);
+    props.title == "Vinhos Branco" &&
+      document.documentElement.style.setProperty(
+        "--vinhosBranco",
+        carouselItems?.length
+      );
+
+    props.title == "Vinhos Tinto" &&
+      document.documentElement.style.setProperty(
+        "--vinhosTinto",
+        carouselItems?.length
+      );
+
+    props.title == "Cadão" &&
+      document.documentElement.style.setProperty(
+        "--cadao",
+        carouselItems?.length
+      );
+
+    props.title == "Azeite" &&
+      document.documentElement.style.setProperty(
+        "--azeite",
+        carouselItems?.length
+      );
   }, [carouselItems]);
 
   const handleAnimationEnd = () => {
@@ -167,45 +212,26 @@ const CarouselContainer = (props) => {
     <div className="carouselwrapper module-wrapper">
       <div className="ui">
         <button onClick={() => setMoveClass("next")} className="prev">
-          <span className="material-icons"><ArrowBackIosNewIcon/></span>
+          <span className="material-icons">
+            <ArrowBackIosNewIcon />
+          </span>
         </button>
         <button onClick={() => setMoveClass("prev")} className="next">
-          <span className="material-icons"><ArrowForwardIosIcon/></span>
+          <span className="material-icons">
+            <ArrowForwardIosIcon />
+          </span>
         </button>
       </div>
-      <h1>{props.title}</h1>
+      <h1 style={{textAlign: 'center', fontFamily: "cursive", color: '#882713' }}>{props.title}</h1>
       <ul
         onAnimationEnd={handleAnimationEnd}
-        className={`${moveClass} carousel`}
+        className={`${moveClass} ${name}`}
       >
-        {carouselItems.map((product, index) => (
+        {carouselItems?.map((product, index) => (
           <Card key={index} product={product} />
         ))}
       </ul>
     </div>
-  );
-};
-
-const CarouselContainerAzeite = (props) => {
-  const [carouselItems, setCarouselItems] = useState(props?.data);
-
-
-
-  return (
-    <>
-    
-<h1>{props.title}</h1>
-    <Box sx={{ml: 50, backgroundColor: "#fff"}} >
-      <ul
-        className={`carouselAzeite`}
-      >
-        
-        {carouselItems.map((product, index) => (
-          <Card key={index} product={product} />
-        ))}
-      </ul>
-    </Box>
-    </>
   );
 };
 
