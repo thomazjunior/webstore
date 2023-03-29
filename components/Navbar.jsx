@@ -16,14 +16,14 @@ const Navbar = () => {
   return (
     <div className="navbar-container">
       <Link href={'/'}>
-      <Box sx={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}>
+      <Box className='navbar-container-title' sx={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}>
         <Image src={image} width={100} height={100} />
         <p className='logo' style={{color: '#CDCDCD', fontSize: '38px'}}>Universo dos Vinhos</p>
         </Box>
         </Link>
       
 
-      <div className="navebar-browser">
+      
         <Sidebar />
         <button
           type="button"
@@ -33,7 +33,7 @@ const Navbar = () => {
           <AiOutlineShopping />
           <span className="cart-item-qty">{totalQuantities}</span>
         </button>
-      </div>
+   
 
       {showCart && <Cart />}
     </div>
