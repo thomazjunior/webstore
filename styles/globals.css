@@ -853,10 +853,10 @@ margin-top: 160px;
 }
 
 
-@media (max-width: 390px) {
+@media (max-width: 414px) {
   .carouselwrapper {
     min-width: 90vh;
-    max-height: 51vh;
+    max-height: 49vh;
    
   }
 
