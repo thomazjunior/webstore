@@ -853,18 +853,18 @@ margin-top: 160px;
 }
 
 
-@media (max-width: 414px) {
+@media (max-width: 428px) {
   .carouselwrapper {
     min-width: 90vh;
-    max-height: 49vh;
+    max-height: 55vh;
    
   }
 
   .card {
-    min-width: 30vh;
-    min-height: 600vh;
+    min-width: 35vh;
+    min-height: 100vh;
     align-items: top;
-    font-size: 19px;
+    font-size: 34px;
   }
 
   .footer-container {

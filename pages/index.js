@@ -123,7 +123,6 @@ const Card = ({ product }) => {
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
   return (
     <Link href={`/product/${slug.current}`}>
-      <Box sx={{ display: "block", justifyContent: "space-between" }}>
         <li className="card">
           <Box sx={{ minHeight: 210 }}>
             <img
@@ -143,7 +142,7 @@ const Card = ({ product }) => {
             </div>
           </Box>
         </li>
-      </Box>
+  
     </Link>
   );
 };
