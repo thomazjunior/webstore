@@ -8,6 +8,7 @@ body,
   box-sizing: border-box;
 }
 
+
 .category {
   display: block;
   list-style-type: disc;
@@ -40,11 +41,14 @@ a {
   text-decoration: none;
 }
 
+
+
 .main-container {
   margin: auto;
   width: 100%;
   background-color: "#fff";
   display: flex;
+  justify-content: space-between;
 }
 
 .sidebar {
@@ -332,7 +336,7 @@ span.text-red {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 100;
+  z-index: 100000;
   /* will-change: transform; */
   transition: all 1s ease-in-out;
 }
@@ -342,15 +346,15 @@ span.text-red {
   background-color: white;
   float: right;
   padding: 40px 10px;
-  position: relative;
+position: relative;
 }
+
 
 .footer-container {
   color: white;
   text-align: center;
   padding: 30px 10px;
   font-weight: 700;
-  display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
@@ -359,16 +363,20 @@ span.text-red {
   background: linear-gradient(
     90deg,
     rgba(108, 106, 106, 1) 0%,
-    rgba(189, 81, 81, 0.8786108193277311) 35%,
+    rgba(189, 81, 81, 0.8786108193277311) 100%,
     rgba(130, 123, 123, 0.8477984943977591) 100%
   );
-  max-height: 100px;
   min-width: 90vh;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: 10000;
 }
 
 .footer-container .icons {
   font-size: 30px;
-  display: flex;
+  
   gap: 10px;
 }
 .cart-heading {
@@ -851,6 +859,10 @@ span.text-red {
   min-height: 45vh;
 }
 
+.carouselwrapper:last-child {
+  margin-bottom: 13.5vh;
+}
+
 
 @media (max-width: 375px) {
   .carouselwrapper {
@@ -963,7 +975,6 @@ span.text-red {
   margin: 0 0 0 var(--carouselLeftMargin);
   display: flex;
   list-style: none;
-  padding: 0;
  
 }
 

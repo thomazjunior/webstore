@@ -20,10 +20,11 @@ const Layout = ({ children }) => {
       <Box>
         <main className="main-container">{children}</main>
       </Box>
- 
-     
+      <Box>
+        <footer>
           <Footer />
-  
+        </footer>
+        </Box>
         </Box>
     </div>
   );
