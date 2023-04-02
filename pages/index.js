@@ -122,24 +122,25 @@ const Card = ({ product }) => {
   const { image, name, slug, price } = product;
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
   return (
-    <Link href={`/product/${slug.current}`}>
-        <li className="card">
-          <Box sx={{ minHeight: 210 }}>
+    <Link href={`/product/${slug.current}`} >
+      <li className="card" >
+        <Box sx={{display: 'block', justifyContent: 'space-around', justifyTracks: "flex-end"}}>
+          <Box sx={{height: "220px"
+          }}>
             <img
               src={urlFor(image && image[0])}
-              width={100}
-              height={100}
               className="product-image"
             />
             <p className="product-name">{name}</p>
             <p className="product-price">{price.toFixed(2)}€</p>
           </Box>
-          <Box>
+          <Box sx={{}}>
             <div className="buttons">
               <button type="button" className="buy-now" onClick={() => null}>
                 Comprar
               </button>
             </div>
+          </Box>
           </Box>
         </li>
   
@@ -208,7 +209,7 @@ const CarouselContainer = (props) => {
   };
 
   return (
-    <div className="carouselwrapper module-wrapper">
+    <div className="carouselwrapper module-wrapper" >
       <div className="ui">
         <button onClick={() => setMoveClass("next")} className="prev">
           <span className="material-icons">
@@ -225,6 +226,7 @@ const CarouselContainer = (props) => {
       <ul
         onAnimationEnd={handleAnimationEnd}
         className={`${moveClass} ${name}`}
+        
       >
         {carouselItems?.map((product, index) => (
           <Card key={index} product={product} />
