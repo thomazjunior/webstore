@@ -124,15 +124,21 @@ const Card = ({ product }) => {
   return (
     <Link href={`/product/${slug.current}`} >
       <li className="card" >
-        <Box sx={{display: 'block', justifyContent: 'space-around', justifyTracks: "flex-end"}}>
-          <Box sx={{height: "220px"
+        <Box sx={{
+          display: 'block',
+          
+        }}>
+          <Box sx={{
+            height: "260px", 
           }}>
             <img
               src={urlFor(image && image[0])}
               className="product-image"
             />
+            <div style={{minHeight: 100, justifyItems: "stretch", justifyContent: 'space-between' }}>
             <p className="product-name">{name}</p>
-            <p className="product-price">{price.toFixed(2)}€</p>
+              <p className="product-price">{price.toFixed(2)}€</p>
+              </div>
           </Box>
           <Box sx={{}}>
             <div className="buttons">
