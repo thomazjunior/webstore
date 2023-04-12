@@ -95,10 +95,10 @@ const Home = ({ products, bannerData }) => {
   return (
     <Box sx={{ width: 1, display: "block" }}>
       {vinhosTinto && (
-        <CarouselContainer data={vinhosTinto} title={"Vinhos Tinto"} />
+        <CarouselContainer data={vinhosTinto} title={"Vinho Tinto"} />
       )}
       {vinhosBranco && (
-        <CarouselContainer data={vinhosBranco} title={"Vinhos Branco"} />
+        <CarouselContainer data={vinhosBranco} title={"Vinho Branco"} />
       )}
       {cadao && <CarouselContainer data={cadao} title={"Cadão"} />}
       {azeite && <CarouselContainer data={azeite} title={"Azeite"} />}

@@ -27,7 +27,7 @@ const Navbar = () => {
             className="navbar-container-title"
             sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
           >
-            <Image src={image} width={100} height={100} />
+            <Image src={image} width={80} height={80} />
             <p className="logo" style={{ color: "#CDCDCD" }}>
               Universo dos Vinhos
             </p>
@@ -44,7 +44,6 @@ const Navbar = () => {
           <span className="cart-item-qty">{totalQuantities}</span>
         </button>
       </div>
-
       {showCart && <Cart />}
     </div>
   );

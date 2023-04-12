@@ -52,7 +52,7 @@ const ProductDetails = ({ product, products }) => {
 
         <div className="product-detail-desc">
           <h1>{name}</h1>
-          <div className="reviews">
+          {/* <div className="reviews">
             <div>
               <AiFillStar />
               <AiFillStar />
@@ -61,7 +61,7 @@ const ProductDetails = ({ product, products }) => {
               <AiOutlineStar />
             </div>
             <p>(20)</p>
-          </div>
+          </div> */}
           <h3>Detalhes: </h3>
           {detailsBreak.map((detail) => {
             const detail2 = detail.split(':')
@@ -90,7 +90,7 @@ const ProductDetails = ({ product, products }) => {
             >
               Adicionar ao carrinho
             </button>
-            <button type="button" className="buy-now" onClick={handleBuyNow}>
+            <button type="button" className="buy-now-cart" onClick={handleBuyNow}>
               Comprar
             </button>
           </div>
