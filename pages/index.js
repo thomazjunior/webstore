@@ -162,7 +162,7 @@ const Card = ({ product, key }) => {
               justifyContent: "space-between",
             }}
           >
-            <p className="product-name" style={{ fontSize: "22px" }}>
+            <p className="product-name" style={{ fontSize: "20px" }}>
               {name}
             </p>
             <p className="product-price" style={{ fontSize: "22px" }}>
