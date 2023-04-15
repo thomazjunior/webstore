@@ -12,12 +12,11 @@ import { urlFor } from '../lib/client';
 
   return (
       <Link href={`/product/${slug.current}`}>
-        <div>
+        <div className="card" style={{ minWidth: '350px', backgroundColor: 'white'}}>
           <img
             src={urlFor(image && image[0])}
-            width={225}
-            height={225}
-            className="product-image"
+          className="product-image"
+          style={{margin: '100px !important'}}
           />
           <p className="product-name">{name}</p>
           <p className="product-price">{price.toFixed(2)}€</p>

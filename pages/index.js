@@ -9,6 +9,7 @@ import { FilterContext } from "../components/context/FiltersContext";
 import { Box } from "@mui/system";
 import Link from "next/link";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { Layout } from "../layout/Layout";
 
 const Home = ({ products, bannerData }) => {
   const filters = React.useContext(FilterContext);
@@ -118,38 +119,95 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Card = ({ product }) => {
+const Card = ({ product, key }) => {
   const { image, name, slug, price } = product;
-  const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
+  const { onAdd, setShowCart } = useStateContext();
+  const [qty, setQty] = useState(1);
+
+  const handleDecQty = (event) => { 
+    console.log(event)
+    event.preventDefault();
+    if (qty > 1)
+    setQty(qty - 1);
+  }
+
+  const handleIncQty = (event) => { 
+    event.preventDefault();
+    setQty(qty + 1);
+  }
+
+  const handleAdd = (event) => {
+    event.preventDefault();
+    onAdd(product, qty)
+    setShowCart(true);
+  }
+
+
+
   return (
-    <Link href={`/product/${slug.current}`} >
-      <li className="card" >
-        <Box sx={{
-          display: 'block',
-          
-        }}>
-          <Box sx={{
-            height: "260px", 
-          }}>
-            <img
-              src={urlFor(image && image[0])}
-              className="product-image"
-            />
-            <div style={{minHeight: 100, justifyItems: "stretch", justifyContent: 'space-between' }}>
-            <p className="product-name">{name}</p>
-              <p className="product-price">{price.toFixed(2)}€</p>
-              </div>
-          </Box>
-          <Box sx={{}}>
-            <div className="buttons">
-              <button type="button" className="buy-now" onClick={() => null}>
-                Comprar
-              </button>
-            </div>
-          </Box>
-          </Box>
-        </li>
-  
+    <Link href={`/product/${slug.current}`} key={slug.current}>
+      <li className="card">
+        <Box sx={{cursor: 'pointer'}}>
+          <img
+            height={100}
+            width={100}
+            src={urlFor(image && image[0])}
+            className="product-image"
+            style={{curso: "pointer !important"}}
+          />
+          <div
+            style={{
+              minHeight: 100,
+              justifyItems: "stretch",
+              justifyContent: "space-between",
+            }}
+          >
+            <p className="product-name" style={{ fontSize: "22px" }}>
+              {name}
+            </p>
+            <p className="product-price" style={{ fontSize: "22px" }}>
+              {price.toFixed(2)}€
+            </p>
+          </div>
+        </Box>
+        <Box sx={{}}>
+          <div className="quantity" style={{display: 'inline-flex'}}>
+            <p className="quantity-desc" style={{width: '200px'}}> 
+              <span
+                className="minus"
+                onClick={handleDecQty}
+              >
+                <AiOutlineMinus />
+              </span>
+              <span className="num">{qty}</span>
+              <span className="plus" onClick={handleIncQty}>
+                <AiOutlinePlus />
+              </span>
+            </p>
+          </div>
+          <div className="buttons">
+            <button
+              type="button"
+              style={{
+                padding: "4px 0px",
+                border: "1px solid #f02d34",
+                margin: "10px 10px 10px",
+                fontSize: "18px",
+                fontWeight: "500",
+                backgroundColor: "white",
+                color: "#f02d34",
+                cursor: "pointer",
+                width: "200px",
+                transform: "scale(1, 1)",
+                transition: "transform 0.5s ease",
+              }}
+              onClick={handleAdd}
+            >
+              Adicionar ao carrinho
+            </button>
+          </div>
+        </Box>
+      </li>
     </Link>
   );
 };
@@ -215,7 +273,7 @@ const CarouselContainer = (props) => {
   };
 
   return (
-    <div className="carouselwrapper module-wrapper" >
+    <div className="carouselwrapper module-wrapper">
       <div className="ui">
         <button onClick={() => setMoveClass("next")} className="prev">
           <span className="material-icons">
@@ -228,11 +286,14 @@ const CarouselContainer = (props) => {
           </span>
         </button>
       </div>
-      <h1 style={{textAlign: 'center', fontFamily: "cursive", color: '#882713' }}>{props.title}</h1>
+      <h1
+        style={{ textAlign: "center", fontFamily: "cursive", color: "#882713" }}
+      >
+        {props.title}
+      </h1>
       <ul
         onAnimationEnd={handleAnimationEnd}
         className={`${moveClass} ${name}`}
-        
       >
         {carouselItems?.map((product, index) => (
           <Card key={index} product={product} />

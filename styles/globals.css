@@ -131,16 +131,7 @@ span.text-red {
   font-size: 30px;
   margin-left: 15px;
 }
-.cart-icon {
-  font-size: 30px;
-  color: gray;
-  cursor: pointer;
-  transition: transform 0.4s ease;
-  border: none;
-  background-color: transparent;
-  margin-right: 20px;
-  margin-left: 10px;
-}
+
 .cart-icon:hover {
   transform: scale(1.1, 1.1);
 }
@@ -169,26 +160,34 @@ span.text-red {
   transform: scale(1, 1);
   transition: transform 0.5s ease;
   color: #324d67;
+  cursor: pointer;
 }
 .product-card:hover {
   transform: scale(1.1, 1.1);
 }
 .product-image {
-  border-radius: 15px;
-  padding: 10px;
+  width: 220px !important;
+  height: 180px !important;
+  cursor: pointer;
+
   /* background-color: #ebebeb; */
   transform: scale(1, 1);
-  transition: transform 0.5s ease;
+
+  margin-left: 40px;
 }
 
 .product-name {
-  font-weight: 500;
-  height: 97px;
+  height: 50px;
+  align-items: center;
+  text-align: center;
+
 }
 .product-price {
   font-weight: 800;
   margin-top: 6px;
   color: black;
+  text-align: center;
+  font-size: 30px !important;
 }
 
 .hero-banner-container {
@@ -614,6 +613,7 @@ position: relative;
 .quantity-desc {
   border: 1px solid gray;
   padding: 6px;
+ 
 }
 .quantity-desc span {
   font-size: 16px;
@@ -868,17 +868,20 @@ position: relative;
   }
 }
 .carouselwrapper {
+  padding: 10px;
   overflow: hidden;
   background: var(--color-lightgrey);
   position: relative;
   font-size: 20px;
-  min-width: 90vh;
-  min-height: 45vh;
+
 }
 
-.carouselwrapper:last-child {
-  margin-bottom: 13.5vh;
+.productswrapper {
+  padding: 5px;
+  background: var(--color-lightgrey);
 }
+
+
 
 
 @media (max-width: 375px) {
@@ -902,11 +905,18 @@ position: relative;
 
  .cart-icon {
     position: absolute;
-    right: -5px;
-    top: 20px;
+    right: -1px;
+    top: 15px;
     zoom: 1.5;
-    color: #324d67;
+    color: rgb(54, 51, 51);
     z-index: 0;
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-left: 10px;
+    transition: transform 0.4s ease;
   }
 
   .navbar-container {
@@ -1049,15 +1059,23 @@ position: relative;
   background: rgb(248, 248, 247);
   zoom: 1;
   min-width: 27vh;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.02, 1.02);
 }
 
 .card .material-icons {
   font-size: 4.8rem;
+  cursor: pointer;
 }
 .card p {
   font-family: "Open Sans Condensed", sans-serif;
   font-size: 1.4rem;
   margin-bottom: 0;
+  cursor: pointer;
 }
 @keyframes next {
   from {

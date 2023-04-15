@@ -1,24 +1,26 @@
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
+import Theme from '../styles/theme';
 
-import { Layout } from '../components';
+import Layout from '../layout/Layout'
 import '../styles/globals.css';
 import '../styles/Home.css'
 import { StateContext } from '../context/StateContext';
 import { FilterProvider } from '../components/context/FiltersContext';
 
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
-    <StateContext>
-      <FilterProvider>
+    <Theme>
+      <StateContext>
       <Layout>
+      <FilterProvider>
         <Toaster />
         <Component {...pageProps} />
-      </Layout>
       </FilterProvider>
-
-    </StateContext>
+      </Layout>
+      </StateContext>
+      </Theme>
   )
 }
 
-export default MyApp
+export default App

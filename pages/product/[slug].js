@@ -27,7 +27,7 @@ const ProductDetails = ({ product, products }) => {
 
   console.log("details", detailsBreak);
   return (
-    <div>
+    <div className='productswrapper'>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
@@ -100,11 +100,11 @@ const ProductDetails = ({ product, products }) => {
       <div className="maylike-products-wrapper">
         <h2>Você também pode gostar</h2>
         <div className="marquee">
-          <div className="maylike-products-container track">
+          <ul className="maylike-products-container track">
             {products.map((item) => (
               <Product key={item._id} product={item} />
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </div>
