@@ -624,7 +624,6 @@ position: relative;
 .quantity-desc {
   border: 1px solid gray;
   padding: 6px;
- 
 }
 .quantity-desc span {
   font-size: 16px;
@@ -637,7 +636,7 @@ position: relative;
 }
 .quantity-desc .num {
   border-right: 1px solid gray;
-  font-size: 20px;
+  font-size: 16px;
 }
 .quantity-desc .plus {
   color: rgb(49, 168, 49);

@@ -44,7 +44,7 @@ function Form() {
             <input
               type="text"
               name="from_name"
-              placeholder="Nome"
+              placeholder="Digite o Nome"
               value={toSend.from_name}
               onChange={handleChange}
             />
@@ -57,7 +57,7 @@ function Form() {
             <input
               type="number"
               name="cellphone"
-              placeholder="Telemóvel"
+              placeholder="Digite o Telemóvel"
               value={toSend.cellphone}
               onChange={handleChange}
             />
@@ -70,7 +70,7 @@ function Form() {
             <input
               name="email"
               type="email"
-              placeholder="Email"
+              placeholder="Digite o Email"
               onChange={handleChange}
               value={toSend.email}
             />
@@ -83,7 +83,7 @@ function Form() {
             <input
               type="text"
               name="place"
-              placeholder="Morada"
+              placeholder="Localidade"
               value={toSend.place}
               onChange={handleChange}
             />

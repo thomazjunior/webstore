@@ -28,6 +28,7 @@ const Cart = ({ handleClick }) => {
 
   const handleCheckout = async () => {
     router.push("/form");
+    setShowCart(false)
   };
 
   return (
