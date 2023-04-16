@@ -14,7 +14,7 @@ import { urlFor } from "../lib/client";
 import getStripe from "../lib/getStripe";
 import { useRouter } from "next/router";
 
-const Cart = () => {
+const Cart = ({ handleClick }) => {
   const router = useRouter();
   const cartRef = useRef();
   const {
@@ -33,7 +33,7 @@ const Cart = () => {
   return (
     <div className="cart-wrapper" ref={cartRef}>
       <div className="cart-container">
-        <button type="button" className="cart-heading" onClick={(event) => {}}>
+        <button type="button" className="cart-heading" onClick={handleClick}>
           <AiOutlineLeft />
           <span className="heading">Carrinho</span>
           <span className="cart-num-items">({totalQuantities} itens)</span>
@@ -52,9 +52,10 @@ const Cart = () => {
         )}
 
         <div className="product-container">
-          {cartItems && cartItems.length >= 1 &&
+          {cartItems &&
+            cartItems.length >= 1 &&
             cartItems.map((item) => (
-              <div className="product" key={item?._id}>
+              <div className="product" key={item._id}>
                 <img
                   src={urlFor(item?.image[0])}
                   className="cart-product-image"
@@ -100,6 +101,7 @@ const Cart = () => {
               </div>
             ))}
         </div>
+
         {cartItems.length >= 1 && (
           <div className="cart-bottom">
             <div className="total">
@@ -107,7 +109,7 @@ const Cart = () => {
               <h3>{totalPrice.toFixed(2)}€</h3>
             </div>
             <div className="btn-container">
-            <button  type="button" className="btn" onClick={handleCheckout}>
+              <button type="button" className="btn" onClick={handleCheckout}>
                 Finalizar pedido
               </button>
             </div>

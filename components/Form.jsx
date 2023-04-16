@@ -11,7 +11,6 @@ function Form() {
     send("universodosvinhos", "template_fcn1uek", toSend, "8zAM9MKMi4O0nixQL")
       .then((response) => {
     toast.success("Ordem de compra enviada com sucesso! Entraremos em contato em breve...");
-        console.log("SUCCESS!", response.status, response.text);
         setTimeout(() => {router.push("/")}, 3000)
     })
     .catch((err) => {

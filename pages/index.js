@@ -94,7 +94,7 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   return (
-    <Box sx={{ width: 1, display: "block" }}>
+    <Box className={'carouselwrapper'} sx={{ width: 1, display: "block", minHeight: '70vh' }}>
       {vinhosTinto && (
         <CarouselContainer data={vinhosTinto} title={"Vinho Tinto"} />
       )}
@@ -125,7 +125,6 @@ const Card = ({ product, key }) => {
   const [qty, setQty] = useState(1);
 
   const handleDecQty = (event) => { 
-    console.log(event)
     event.preventDefault();
     if (qty > 1)
     setQty(qty - 1);
@@ -137,9 +136,10 @@ const Card = ({ product, key }) => {
   }
 
   const handleAdd = (event) => {
+    console.log(product)
     event.preventDefault();
+    if(product)
     onAdd(product, qty)
-    setShowCart(true);
   }
 
 

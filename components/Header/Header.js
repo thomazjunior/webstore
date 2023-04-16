@@ -22,14 +22,11 @@ import { Typography } from "@mui/material";
 const Header = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
   const handleClick = (event) => {
-    setTimeout(
-      () => showCart == true && setShowCart((prevState) => !prevState),
-      200
-    );
+    setShowCart(!showCart);
   };
   return (
 
-    <Container onClick={handleClick}>
+    <Container>
       <Div1>
         <Link href="/">
           <a style={{ display: "flex", alignItems: "center", color: "white" }}>
@@ -48,7 +45,7 @@ const Header = () => {
           <span className="cart-item-qty">{totalQuantities}</span>
         </button>
       </Div3>
-      {showCart && <Cart />}
+      {showCart && <Cart handleClick={handleClick} />}
     </Container>
   )
 };

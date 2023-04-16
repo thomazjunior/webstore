@@ -25,7 +25,6 @@ const ProductDetails = ({ product, products }) => {
 
   const detailsBreak = details.split(";");
 
-  console.log("details", detailsBreak);
   return (
     <div className='productswrapper'>
       <div className="product-detail-container">
@@ -140,7 +139,6 @@ export const getStaticProps = async ({ params: { slug } }) => {
   const product = await client.fetch(query);
   const products = await client.fetch(productsQuery);
 
-  console.log(product);
 
   return {
     props: { products, product },

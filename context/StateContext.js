@@ -14,28 +14,23 @@ export const StateContext = ({ children }) => {
   let index;
 
   const onAdd = (product, quantity) => {
-    const checkProductInCart = cartItems.find((item) => item._id === product._id);
-    
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
-    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
-    
-    if(checkProductInCart) {
-      const updatedCartItems = cartItems && cartItems.map((cartProduct) => {
-        if(cartProduct?._id === product._id) return {
-          ...cartProduct,
-          quantity: cartProduct.quantity + quantity
-        }
-      })
+  const checkProductInCart = cartItems && cartItems.length && cartItems.find((item) => item._id === product._id);
 
-      setCartItems(updatedCartItems);
-    } else {
-      product.quantity = quantity;
-      
-      setCartItems([...cartItems, { ...product }]);
-    }
+  setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+  setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
-    toast.success(`${qty} ${product.name} adicionado ao carrinho.`);
-  } 
+  if (checkProductInCart) {
+    const updatedCartItem = { ...checkProductInCart, quantity: checkProductInCart.quantity + quantity };
+    const updatedCartItems = cartItems.filter((item) => item._id !== product._id);
+    setCartItems([...updatedCartItems, updatedCartItem]);
+  } else {
+    product.quantity = quantity;
+    setCartItems([...cartItems, { ...product }]);
+  }
+
+  toast.success(`${quantity} ${product.name} adicionado ao carrinho.`);
+}
+
 
   const onRemove = (product) => {
     foundProduct = cartItems.find((item) => item._id === product._id);
