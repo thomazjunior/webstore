@@ -10,6 +10,7 @@ import { Box } from "@mui/system";
 import Link from "next/link";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { Layout } from "../layout/Layout";
+import Image from "next/image";
 
 const Home = ({ products, bannerData }) => {
   const filters = React.useContext(FilterContext);
@@ -120,9 +121,10 @@ export const getServerSideProps = async () => {
 };
 
 const Card = ({ product, key }) => {
-  const { image, name, slug, price } = product;
+  const { image, name, slug, price, newprice } = product;
   const { onAdd, setShowCart } = useStateContext();
   const [qty, setQty] = useState(1);
+  console.log(product)
 
   const handleDecQty = (event) => { 
     event.preventDefault();
@@ -148,13 +150,8 @@ const Card = ({ product, key }) => {
     <Link href={`/product/${slug.current}`} key={slug.current}>
       <li className="card">
         <Box sx={{cursor: 'pointer'}}>
-          <img
-            height={100}
-            width={100}
-            src={urlFor(image && image[0])}
-            className="product-image"
-            style={{curso: "pointer !important"}}
-          />
+          <Image width={150} height={180} src={urlFor(image && image[0]).toString()}/>
+
           <div
             style={{
               minHeight: 100,
@@ -165,9 +162,12 @@ const Card = ({ product, key }) => {
             <p className="product-name" style={{ fontSize: "20px" }}>
               {name}
             </p>
-            <p className="product-price" style={{ fontSize: "22px" }}>
-              {price.toFixed(2)}€
-            </p>
+            {!newprice && <p className="product-price" style={{ fontSize: "18px" }}>
+              {price?.toFixed(2)}€
+            </p>}
+            {newprice && <p className="product-price" style={{ fontSize: "18px" }}>
+             <s>{price.toFixed(2)}€ </s><br/> <b style={{color: 'red'}}>{newprice.toFixed(2)}€ !!!</b>
+            </p>}
           </div>
         </Box>
         <Box sx={{}}>

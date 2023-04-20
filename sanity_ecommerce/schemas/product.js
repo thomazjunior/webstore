@@ -32,9 +32,20 @@ export default {
       type: 'number',
     },
     { 
+      name: 'newprice',
+      title: 'New Price',
+      type: 'number',
+    },
+    { 
       name: 'details',
       title: 'Details',
       type: 'string',
+    },
+    {
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: [{ type: 'category' }]
     }
   ]
 }
