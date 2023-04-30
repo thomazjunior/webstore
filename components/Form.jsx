@@ -6,17 +6,23 @@ import { useRouter } from 'next/router'
 
 function Form() {
   const router = useRouter()
+  
   const onSubmit = (e) => {
     e.preventDefault();
+    if (!toSend.from_name || !toSend.email || !toSend.cellphone || !toSend.place) {
+      toast.error("Por favor preencha todos os campos!");
+      return;
+    }
     send("universodosvinhos", "template_fcn1uek", toSend, "8zAM9MKMi4O0nixQL")
       .then((response) => {
-    toast.success("Ordem de compra enviada com sucesso! Entraremos em contato em breve...");
-        setTimeout(() => {router.push("/")}, 3000)
-    })
-    .catch((err) => {
-    console.log("FAILED...", err);
-    });
+        toast.success("Pedido de encomenda efetuada com sucesso! Entraremos em contato em breve...");
+        setTimeout(() => {router.push("/")}, 4000)
+      })
+      .catch((err) => {
+        console.log("FAILED...", err);
+      });
   };
+  
 
   const { cartItems, totalPrice } = useStateContext();
 
@@ -30,7 +36,7 @@ function Form() {
     email: "",
     cellphone: "",
     place: "",
-    message: `Reumo da Compra:  ${cartItems.map(
+    message: `Resumo da Encomenda:  ${cartItems.map(
       (item) => "\n" + item.quantity + " x " + item.name
     )} + "\n Preço total: ${totalPrice.toFixed(2)}`,
   });
@@ -93,7 +99,7 @@ function Form() {
           </div>
         </div>
         <div class="row">
-          <h4>Resumo da Compra</h4>
+          <h4>Resumo da Encomenda</h4>
           <br />
           {cartItems.map((item) => (
             <>
@@ -108,9 +114,9 @@ function Form() {
         </div>
         <button
           style={{
-            padding: "4px 0px",
+            padding: "3px 0px",
             border: "1px solid #f02d34",
-            margin: "10px 10px 10px",
+            margin: "10px 1px 10px",
             fontSize: "18px",
             fontWeight: "500",
             backgroundColor: "white",

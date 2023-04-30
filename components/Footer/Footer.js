@@ -1,5 +1,5 @@
 import React from "react";
-import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
+import { AiFillGithub, AiFillInstagram, AiFillFacebook } from "react-icons/ai";
 
 import { SocialIcons } from "../Header/HeaderStyles";
 import {
@@ -20,7 +20,7 @@ const Footer = () => {
       <LinkList>
         <LinkColumn>
           <LinkTitle>Contacto</LinkTitle>
-          <LinkItem href="tel:+351914214983">+351914214983</LinkItem>
+          <LinkItem href="tel:+351914214983">+351 914214983</LinkItem>
         </LinkColumn>
         <LinkColumn>
           <LinkTitle>Email</LinkTitle>
@@ -32,13 +32,13 @@ const Footer = () => {
       <SocialIconsContainer>
         <CompanyContainer>
         </CompanyContainer>
-        <SocialIcons href="https://github.com/thomazjunior">
+        {/* <SocialIcons href="https://github.com/thomazjunior" target="_blank">
           <AiFillGithub size="3rem" />
+        </SocialIcons> */}
+        <SocialIcons href="https://www.facebook.com/people/Vinhos-Cad%C3%A3ocabe%C3%A7a-Do-POTE/100057610382914/?locale=pt_PT" target="_blank">
+          <AiFillFacebook size="3rem" />
         </SocialIcons>
-        <SocialIcons href="https://www.linkedin.com/in/paulo-thomaz-junior">
-          <AiFillLinkedin size="3rem" />
-        </SocialIcons>
-        <SocialIcons href="https://www.instagram.com/thomazbjj_">
+        <SocialIcons href="https://www.instagram.com/universodovinho/" target="_blank">
           <AiFillInstagram size="3rem" />
         </SocialIcons>
       </SocialIconsContainer>
