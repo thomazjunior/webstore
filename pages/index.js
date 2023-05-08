@@ -11,6 +11,7 @@ import Link from "next/link";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { Layout } from "../layout/Layout";
 import Image from "next/image";
+import promoLogo from "../assets/promo.png";
 
 const Home = ({ products, bannerData }) => {
   const filters = React.useContext(FilterContext);
@@ -95,7 +96,10 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   return (
-    <Box className={'carouselwrapper'} sx={{ width: 1, display: "block", minHeight: '70vh' }}>
+    <Box
+      className={"carouselwrapper"}
+      sx={{ width: 1, display: "block", minHeight: "70vh" }}
+    >
       {vinhosTinto && (
         <CarouselContainer data={vinhosTinto} title={"Vinho Tinto"} />
       )}
@@ -124,33 +128,33 @@ const Card = ({ product, key }) => {
   const { image, name, slug, price, newprice } = product;
   const { onAdd, setShowCart } = useStateContext();
   const [qty, setQty] = useState(1);
-  console.log(product)
+  console.log(product);
 
-  const handleDecQty = (event) => { 
+  const handleDecQty = (event) => {
     event.preventDefault();
-    if (qty > 1)
-    setQty(qty - 1);
-  }
+    if (qty > 1) setQty(qty - 1);
+  };
 
-  const handleIncQty = (event) => { 
+  const handleIncQty = (event) => {
     event.preventDefault();
     setQty(qty + 1);
-  }
+  };
 
   const handleAdd = (event) => {
-    console.log(product)
+    console.log(product);
     event.preventDefault();
-    if(product)
-    onAdd(product, qty)
-  }
-
-
+    if (product) onAdd(product, qty);
+  };
 
   return (
     <Link href={`/product/${slug.current}`} key={slug.current}>
       <li className="card">
-        <Box sx={{cursor: 'pointer'}}>
-          <Image width={150} height={180} src={urlFor(image && image[0]).toString()}/>
+        <Box sx={{ cursor: "pointer" }}>
+          <Image
+            width={125}
+            height={170}
+            src={urlFor(image && image[0]).toString()}
+          />
 
           <div
             style={{
@@ -162,21 +166,29 @@ const Card = ({ product, key }) => {
             <p className="product-name" style={{ fontSize: "20px" }}>
               {name}
             </p>
-            {!newprice && <p className="product-price" style={{ fontSize: "18px" }}>
-              {price?.toFixed(2)}€
-            </p>}
-            {newprice && <p className="product-price" style={{ fontSize: "18px" }}>
-             <s>{price.toFixed(2)}€ </s><br/> <b style={{color: 'red'}}>{newprice.toFixed(2)}€ !!!</b>
-            </p>}
+            {!newprice && (
+              <p className="product-price" style={{ fontSize: "18px" }}>
+                {price?.toFixed(2)}€
+              </p>
+            )}
+            {newprice && (
+              <p className="product-price" style={{ fontSize: "18px" }}>
+                <s>{price.toFixed(2)}€ </s>
+                <br />{" "}
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <Image width={100} height={70} src={promoLogo} />
+                <b style={{ color: "red",}}>
+                  {newprice.toFixed(2)}€ !!!
+                  </b>
+                  </Box>
+              </p>
+            )}
           </div>
         </Box>
         <Box sx={{}}>
-          <div className="quantity" style={{display: 'inline-flex'}}>
-            <p className="quantity-desc" style={{width: '200px'}}> 
-              <span
-                className="minus"
-                onClick={handleDecQty}
-              >
+          <div className="quantity" style={{ display: "inline-flex" }}>
+            <p className="quantity-desc" style={{ width: "200px" }}>
+              <span className="minus" onClick={handleDecQty}>
                 <AiOutlineMinus />
               </span>
               <span className="num">{qty}</span>
