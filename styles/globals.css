@@ -435,6 +435,24 @@ position: relative;
   height: 150px;
   border-radius: 15px;
   background-color: #ebebeb;
+
+}
+
+  .product_dashboard {
+    display: block;
+    gap: 30px;
+    padding: 2px;
+  }
+  .product_dashboard .cart-product-image {
+    width: 125px;
+    height: 160px;
+    
+
+   
+
+
+
+
 }
 .item-desc .flex {
   display: flex;
@@ -1103,3 +1121,11 @@ position: relative;
     transform: translateX(calc(0px - var(--cardWidth)));
   }
 }
+
+
+
+
+
+
+
+

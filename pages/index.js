@@ -148,14 +148,14 @@ const Card = ({ product, key }) => {
 
   return (
     <Link href={`/product/${slug.current}`} key={slug.current}>
-      <li className="card">
+      <li className="card" style={{borderRadius: 50, width: '380px', background: 'snow'}}>
         <Box sx={{ cursor: "pointer" }}>
-          <Image
-            width={125}
-            height={170}
+          <div className="product_dashboard">
+          <img
+            className="cart-product-image"
             src={urlFor(image && image[0]).toString()}
           />
-
+          </div>
           <div
             style={{
               minHeight: 100,

@@ -29,7 +29,13 @@ export const StateContext = ({ children }) => {
   }
 
   toast.success(`${quantity} ${product.name} adicionado ao carrinho.`);
-}
+  }
+  
+  const clearCart = () => {
+    setCartItems([]);
+    setTotalPrice(0);
+    setTotalQuantities(0);
+  };
 
 
   const onRemove = (product) => {
@@ -87,7 +93,8 @@ export const StateContext = ({ children }) => {
         onRemove,
         setCartItems,
         setTotalPrice,
-        setTotalQuantities 
+        setTotalQuantities, 
+        clearCart
       }}
     >
       {children}

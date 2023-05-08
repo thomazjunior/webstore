@@ -4,6 +4,7 @@ import { send } from "emailjs-com";
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/router'
 
+
 function Form() {
   const router = useRouter()
   
@@ -16,15 +17,20 @@ function Form() {
     send("universodosvinhos", "template_fcn1uek", toSend, "8zAM9MKMi4O0nixQL")
       .then((response) => {
         toast.success("Pedido de encomenda efetuada com sucesso! Entraremos em contato em breve...");
-        setTimeout(() => {router.push("/")}, 4000)
+        handleClearCart();
+        setTimeout(() => {router.push("/")}, 3000)
       })
       .catch((err) => {
         console.log("FAILED...", err);
       });
   };
+
+  const handleClearCart = () => {
+    clearCart();
+  }
   
 
-  const { cartItems, totalPrice } = useStateContext();
+  const { cartItems, totalPrice, clearCart } = useStateContext();
 
   const handleChange = (e) => {
     setToSend({ ...toSend, [e.target.name]: e.target.value });

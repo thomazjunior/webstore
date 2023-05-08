@@ -38,9 +38,10 @@ const Header = () => {
     </Link>
   </Div1>
 
-  <Div2>
-    <Typography style={{ fontSize: "4rem", color: "white", }}>Universo dos Vinhos</Typography>
-  </Div2>
+      <div className="eleven">
+       <h1>Universo dos Vinhos</h1>
+      </div>
+  
 
   <Div3>
     <button
