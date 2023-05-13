@@ -444,16 +444,11 @@ position: relative;
     padding: 2px;
   }
   .product_dashboard .cart-product-image {
-    width: 125px;
-    height: 160px;
-    
-
-   
-
-
-
-
+    max-width: 150px;
+    max-height: 180px;
+    object-fit: contain;
 }
+
 .item-desc .flex {
   display: flex;
   justify-content: space-between;
@@ -527,7 +522,8 @@ position: relative;
   background-color: #ebebeb;
 
   width: 400px;
-  height: 400px;
+    height:400px;
+    object-fit: contain;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }

@@ -36,7 +36,7 @@ const ProductDetails = ({ product, products }) => {
             />
           </div>
           <div className="small-images-container">
-            {image?.map((item, i) => (
+            {/* {image?.map((item, i) => (
               <img
                 key={i}
                 src={urlFor(item)}
@@ -45,7 +45,7 @@ const ProductDetails = ({ product, products }) => {
                 }
                 onMouseEnter={() => setIndex(i)}
               />
-            ))}
+            ))} */}
           </div>
         </div>
 
