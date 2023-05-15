@@ -20,14 +20,23 @@ const Home = ({ products, bannerData }) => {
   const [vinhosTinto, setVinhosTinto] = useState();
   const [cadao, setCadao] = useState();
   const [azeite, setAzeite] = useState();
+  const [rose, setRose] = useState();
+  const [espumante, setEspumante] = useState();
+
+  console.log("vinhosBranco", vinhosBranco);
+  console.log("vinhosTinto", vinhosTinto);
+  console.log("rose", rose);
+  console.log("azeite", azeite);
+  console.log("espumante", espumante);
+  console.log("cadao", cadao);
 
   useEffect(() => {
     const fetchVinhosBranco = async () => {
-      const type = "branco";
+      const type = "Branco";
       try {
-        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
-        const vinhosBranco = await client.fetch(gQuery);
+        const vinhosBranco = await client.fetch(query);
         setVinhosBranco(() => vinhosBranco);
 
         /**   if (category !== 'all') {
@@ -58,11 +67,11 @@ const Home = ({ products, bannerData }) => {
 
   useEffect(() => {
     const fetchVinhosTinto = async () => {
-      const type = "tinto";
+      const type = "Tinto";
       try {
-        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
-        const vinhosTinto = await client.fetch(gQuery);
+        const vinhosTinto = await client.fetch(query);
         setVinhosTinto(() => vinhosTinto);
       } catch (err) {}
     };
@@ -70,12 +79,25 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   useEffect(() => {
-    const fetchCadao = async () => {
-      const type = "cadão";
+    const fetchEspumante = async () => {
+      const type = "Espumante";
       try {
-        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
-        const cadao = await client.fetch(gQuery);
+        const espumante = await client.fetch(query);
+        setEspumante(() => espumante);
+      } catch (err) {}
+    };
+    fetchEspumante();
+  }, []);
+
+  useEffect(() => {
+    const fetchCadao = async () => {
+      const type = "Cadao";
+      try {
+        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
+
+        const cadao = await client.fetch(query);
         setCadao(() => cadao);
       } catch (err) {}
     };
@@ -83,12 +105,25 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   useEffect(() => {
-    const fetchAzeite = async () => {
-      const type = "azeite";
+    const fetchRose = async () => {
+      const type = "Rosé";
       try {
-        let gQuery = `*[_type == "product" && name match "${type}*"]`;
+        let query = `*[_type == "product" && name match "${type}*"]`;
 
-        const azeite = await client.fetch(gQuery);
+        const rose = await client.fetch(query);
+        setRose(() => rose);
+      } catch (err) {}
+    };
+    fetchRose();
+  }, []);
+
+  useEffect(() => {
+    const fetchAzeite = async () => {
+      const type = "Azeite";
+      try {
+        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
+
+        const azeite = await client.fetch(query);
         setAzeite(() => azeite);
       } catch (err) {}
     };
@@ -106,8 +141,9 @@ const Home = ({ products, bannerData }) => {
       {vinhosBranco && (
         <CarouselContainer data={vinhosBranco} title={"Vinho Branco"} />
       )}
-      {cadao && <CarouselContainer data={cadao} title={"Cadão"} />}
       {azeite && <CarouselContainer data={azeite} title={"Azeite"} />}
+      {rose && <CarouselContainer data={rose} title={"Rosé"} />}
+      {espumante && <CarouselContainer data={espumante} title={"Espumante"} />}
     </Box>
   );
 };
@@ -128,7 +164,6 @@ const Card = ({ product, key }) => {
   const { image, name, slug, price, newprice } = product;
   const { onAdd, setShowCart } = useStateContext();
   const [qty, setQty] = useState(1);
-  console.log(product);
 
   const handleDecQty = (event) => {
     event.preventDefault();
@@ -141,20 +176,19 @@ const Card = ({ product, key }) => {
   };
 
   const handleAdd = (event) => {
-    console.log(product);
     event.preventDefault();
     if (product) onAdd(product, qty);
   };
 
   return (
     <Link href={`/product/${slug.current}`} key={slug.current}>
-      <li className="card" style={{borderRadius: 50, width: '380px', background: 'snow'}}>
+      <li className="card">
         <Box sx={{ cursor: "pointer" }}>
           <div className="product_dashboard">
-          <img
-            className="cart-product-image"
-            src={urlFor(image && image[0]).toString()}
-          />
+            <img
+              className="cart-product-image"
+              src={urlFor(image && image[0])?.toString()}
+            />
           </div>
           <div
             style={{
@@ -175,12 +209,16 @@ const Card = ({ product, key }) => {
               <p className="product-price" style={{ fontSize: "18px" }}>
                 <s>{price.toFixed(2)}€ </s>
                 <br />{" "}
-                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <Image width={100} height={70} src={promoLogo} />
-                <b style={{ color: "red",}}>
-                  {newprice.toFixed(2)}€ !!!
-                  </b>
-                  </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image width={100} height={70} src={promoLogo} />
+                  <b style={{ color: "red" }}>{newprice.toFixed(2)}€ !!!</b>
+                </Box>
               </p>
             )}
           </div>
@@ -233,14 +271,28 @@ const CarouselContainer = (props) => {
       ? "carouselTinto"
       : props.title == "Vinhos Branco"
       ? "carouselBranco"
-      : props.title == "Cadão"
-      ? "carouselCadao"
+      : props.title == "Espumante"
+      ? "carouselEspumante"
+      : props.title == "Rosé"
+      ? "carouselRose"
       : "carouselAzeite";
 
   useEffect(() => {
     props.title == "Vinhos Branco" &&
       document.documentElement.style.setProperty(
         "--vinhosBranco",
+        carouselItems?.length
+      );
+
+    props.title == "Espumante" &&
+      document.documentElement.style.setProperty(
+        "--espumante",
+        carouselItems?.length
+      );
+
+    props.title == "Rosé" &&
+      document.documentElement.style.setProperty(
+        "--rose",
         carouselItems?.length
       );
 

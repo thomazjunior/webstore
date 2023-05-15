@@ -884,6 +884,8 @@ position: relative;
   --carouselVinhosBranco: calc(var(--cardWidth) * var(--vinhosBranco));
   --carouselCadao: calc(var(--cardWidth) * var(--cadao));
   --carouselAzeite: calc(var(--cardWidth) * var(--azeite));
+  --carouselEspumante: calc(var(--cardWidth) * var(--espumante));
+  --carouselRose: calc(var(--cardWidth) * var(--rose));
   --carouselLeftMargin: calc(2vw - var(--cardWidth));
 
   @media screen and (max-width: 900px) {
@@ -1044,6 +1046,68 @@ position: relative;
   width: calc(var(--cardWidth) - var(--card-margin) * 2);
   box-sizing: border-box;
 }
+
+
+
+
+
+.carouselEspumante {
+  width: var(--carouselEspumante);
+  margin: 0 0 0 var(--carouselLeftMargin);
+  display: flex;
+  list-style: none;
+ 
+}
+
+.carouselEspumante.prev {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: prev;
+}
+.carouselEspumante.next {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: next;
+}
+.carouselEspumante li {
+  text-align: center;
+  width: calc(var(--cardWidth) - var(--card-margin) * 2);
+  box-sizing: border-box;
+}
+
+
+
+
+.carouselRose {
+  width: var(--carouselRose);
+  margin: 0 0 0 var(--carouselLeftMargin);
+  display: flex;
+  list-style: none;
+ 
+}
+
+.carouselRose.prev {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: prev;
+}
+.carouselRose.next {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+  animation-name: next;
+}
+.carouselRose li {
+  text-align: center;
+  width: calc(var(--cardWidth) - var(--card-margin) * 2);
+  box-sizing: border-box;
+}
+
+
+
+
+
+
+
 
 .ui {
   position: absolute;
