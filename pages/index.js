@@ -20,15 +20,10 @@ const Home = ({ products, bannerData }) => {
   const [vinhosTinto, setVinhosTinto] = useState();
   const [cadao, setCadao] = useState();
   const [azeite, setAzeite] = useState();
-  const [rose, setRose] = useState();
-  const [espumante, setEspumante] = useState();
+  const [outros, setOutros] = useState();
+  const [vinhoPorto, setVinhoPorto] = useState();
 
-  console.log("vinhosBranco", vinhosBranco);
-  console.log("vinhosTinto", vinhosTinto);
-  console.log("rose", rose);
-  console.log("azeite", azeite);
-  console.log("espumante", espumante);
-  console.log("cadao", cadao);
+
 
   useEffect(() => {
     const fetchVinhosBranco = async () => {
@@ -79,16 +74,16 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   useEffect(() => {
-    const fetchEspumante = async () => {
-      const type = "Espumante";
+    const fetchVinhoPorto = async () => {
+      const type = "Porto";
       try {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
-        const espumante = await client.fetch(query);
-        setEspumante(() => espumante);
+        const vinhoPorto = await client.fetch(query);
+        setVinhoPorto(() => vinhoPorto);
       } catch (err) {}
     };
-    fetchEspumante();
+    fetchVinhoPorto();
   }, []);
 
   useEffect(() => {
@@ -105,16 +100,16 @@ const Home = ({ products, bannerData }) => {
   }, []);
 
   useEffect(() => {
-    const fetchRose = async () => {
-      const type = "Rosé";
+    const fetchOutros = async () => {
+      const type = "Outros";
       try {
-        let query = `*[_type == "product" && name match "${type}*"]`;
+        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
-        const rose = await client.fetch(query);
-        setRose(() => rose);
+        const outros = await client.fetch(query);
+        setOutros(() => outros);
       } catch (err) {}
     };
-    fetchRose();
+    fetchOutros();
   }, []);
 
   useEffect(() => {
@@ -142,8 +137,8 @@ const Home = ({ products, bannerData }) => {
         <CarouselContainer data={vinhosBranco} title={"Vinho Branco"} />
       )}
       {azeite && <CarouselContainer data={azeite} title={"Azeite"} />}
-      {rose && <CarouselContainer data={rose} title={"Rosé"} />}
-      {espumante && <CarouselContainer data={espumante} title={"Espumante"} />}
+      {outros && <CarouselContainer data={outros} title={"Outros"} />}
+      {vinhoPorto && <CarouselContainer data={vinhoPorto} title={"Vinho do Porto/Moscatel"} />}
     </Box>
   );
 };
@@ -271,10 +266,10 @@ const CarouselContainer = (props) => {
       ? "carouselTinto"
       : props.title == "Vinhos Branco"
       ? "carouselBranco"
-      : props.title == "Espumante"
-      ? "carouselEspumante"
-      : props.title == "Rosé"
-      ? "carouselRose"
+      : props.title == "Vinho do Porto/Moscatel"
+      ? "carouselVinhoPorto"
+      : props.title == "Outros"
+      ? "carouselOutros"
       : "carouselAzeite";
 
   useEffect(() => {
@@ -284,15 +279,15 @@ const CarouselContainer = (props) => {
         carouselItems?.length
       );
 
-    props.title == "Espumante" &&
+    props.title == "Vinho do Porto/Moscatel" &&
       document.documentElement.style.setProperty(
-        "--espumante",
+        "--vinhoPorto",
         carouselItems?.length
       );
 
-    props.title == "Rosé" &&
+    props.title == "Outros" &&
       document.documentElement.style.setProperty(
-        "--rose",
+        "--outros",
         carouselItems?.length
       );
 

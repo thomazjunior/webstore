@@ -884,8 +884,8 @@ position: relative;
   --carouselVinhosBranco: calc(var(--cardWidth) * var(--vinhosBranco));
   --carouselCadao: calc(var(--cardWidth) * var(--cadao));
   --carouselAzeite: calc(var(--cardWidth) * var(--azeite));
-  --carouselEspumante: calc(var(--cardWidth) * var(--espumante));
-  --carouselRose: calc(var(--cardWidth) * var(--rose));
+  --carouselVinhoPorto: calc(var(--cardWidth) * var(--vinhoPorto));
+  --carouselOutros: calc(var(--cardWidth) * var(--outros));
   --carouselLeftMargin: calc(2vw - var(--cardWidth));
 
   @media screen and (max-width: 900px) {
@@ -1051,25 +1051,25 @@ position: relative;
 
 
 
-.carouselEspumante {
-  width: var(--carouselEspumante);
+.carouselVinhoPorto {
+  width: var(--carouselVinhoPorto);
   margin: 0 0 0 var(--carouselLeftMargin);
   display: flex;
   list-style: none;
  
 }
 
-.carouselEspumante.prev {
+.carouselVinhoPorto.prev {
   animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: prev;
 }
-.carouselEspumante.next {
+.carouselVinhoPorto.next {
   animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: next;
 }
-.carouselEspumante li {
+.carouselVinhoPorto li {
   text-align: center;
   width: calc(var(--cardWidth) - var(--card-margin) * 2);
   box-sizing: border-box;
@@ -1078,25 +1078,25 @@ position: relative;
 
 
 
-.carouselRose {
-  width: var(--carouselRose);
+.carouselOutros {
+  width: var(--carouselOutros);
   margin: 0 0 0 var(--carouselLeftMargin);
   display: flex;
   list-style: none;
  
 }
 
-.carouselRose.prev {
+.carouselOutros.prev {
   animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: prev;
 }
-.carouselRose.next {
+.carouselOutros.next {
   animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
   animation-name: next;
 }
-.carouselRose li {
+.carouselOutros li {
   text-align: center;
   width: calc(var(--cardWidth) - var(--card-margin) * 2);
   box-sizing: border-box;
@@ -1146,7 +1146,7 @@ position: relative;
   margin: var(--card-margin);
   background: rgb(248, 248, 247);
   zoom: 1;
-  min-width: 27vh;
+  min-width: 45vh;
   transition: all 0.3s ease;
   cursor: pointer;
 }
