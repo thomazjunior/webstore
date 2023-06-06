@@ -46,6 +46,12 @@ export default {
       title: 'Category',
       type: 'reference',
       to: [{ type: 'category' }]
-    }
+    }, 
+    {
+      name: 'order',
+      title: 'Order',
+      type: 'number',
+      hidden: false, // Hide the order field in the content editor
+    },
   ]
 }

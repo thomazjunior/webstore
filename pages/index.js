@@ -25,6 +25,8 @@ const Home = ({ products, bannerData }) => {
 
 
 
+
+
   useEffect(() => {
     const fetchVinhosBranco = async () => {
       const type = "Branco";
@@ -32,7 +34,7 @@ const Home = ({ products, bannerData }) => {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
         const vinhosBranco = await client.fetch(query);
-        setVinhosBranco(() => vinhosBranco);
+        setVinhosBranco(() => vinhosBranco?.sort((a, b) => a.order - b.order));
 
         /**   if (category !== 'all') {
           gQuery += ` && category match "${category}" `;
@@ -67,7 +69,8 @@ const Home = ({ products, bannerData }) => {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
         const vinhosTinto = await client.fetch(query);
-        setVinhosTinto(() => vinhosTinto);
+        console.log(vinhosTinto?.sort((a, b) => a.order - b.order))
+        setVinhosTinto(() => vinhosTinto?.sort((a, b) => a.order - b.order));
       } catch (err) {}
     };
     fetchVinhosTinto();
@@ -80,7 +83,7 @@ const Home = ({ products, bannerData }) => {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
         const vinhoPorto = await client.fetch(query);
-        setVinhoPorto(() => vinhoPorto);
+        setVinhoPorto(() => vinhoPorto?.sort((a, b) => a.order - b.order));
       } catch (err) {}
     };
     fetchVinhoPorto();
@@ -93,7 +96,7 @@ const Home = ({ products, bannerData }) => {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
         const cadao = await client.fetch(query);
-        setCadao(() => cadao);
+        setCadao(() => cadao?.sort((a, b) => a.order - b.order));
       } catch (err) {}
     };
     fetchCadao();
@@ -106,7 +109,7 @@ const Home = ({ products, bannerData }) => {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
         const outros = await client.fetch(query);
-        setOutros(() => outros);
+        setOutros(() => outros?.sort((a, b) => a.order - b.order));
       } catch (err) {}
     };
     fetchOutros();
@@ -119,7 +122,7 @@ const Home = ({ products, bannerData }) => {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
 
         const azeite = await client.fetch(query);
-        setAzeite(() => azeite);
+        setAzeite(() => azeite?.sort((a, b) => a.order - b.order));
       } catch (err) {}
     };
     fetchAzeite();
