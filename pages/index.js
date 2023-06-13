@@ -15,133 +15,48 @@ import promoLogo from "../assets/promo.png";
 
 const Home = ({ products, bannerData }) => {
   const filters = React.useContext(FilterContext);
-  const [currentProducts, setCurrentProducts] = useState(products);
-  const [vinhosBranco, setVinhosBranco] = useState();
-  const [vinhosTinto, setVinhosTinto] = useState();
-  const [cadao, setCadao] = useState();
-  const [azeite, setAzeite] = useState();
-  const [outros, setOutros] = useState();
-  const [vinhoPorto, setVinhoPorto] = useState();
-
-
-
-
+  const [vinhosBranco, setVinhosBranco] = useState([]);
+  const [vinhosTinto, setVinhosTinto] = useState([]);
+  const [cadao, setCadao] = useState([]);
+  const [azeite, setAzeite] = useState([]);
+  const [outros, setOutros] = useState([]);
+  const [vinhoPorto, setVinhoPorto] = useState([]);
 
   useEffect(() => {
-    const fetchVinhosBranco = async () => {
-      const type = "Branco";
+    const fetchProductsByType = async (type, setState) => {
       try {
         const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
-
-        const vinhosBranco = await client.fetch(query);
-        setVinhosBranco(() => vinhosBranco?.sort((a, b) => a.order - b.order));
-
-        /**   if (category !== 'all') {
-          gQuery += ` && category match "${category}" `;
-        }
-        if (query !== 'all') {
-          gQuery += ` && name match "${query}" `;
-        }
-        if (price !== 'all') {
-          const minPrice = Number(price.split('-')[0]);
-          const maxPrice = Number(price.split('-')[1]);
-          gQuery += ` && price >= ${minPrice} && price <= ${maxPrice}`;
-        }
-        if (rating !== 'all') {
-          gQuery += ` && rating >= ${Number(rating)} `;
-        }
-        let order = '';
-        if (sort !== 'default') {
-          if (sort === 'lowest') order = '| order(price asc)';
-          if (sort === 'highest') order = '| order(price desc)';
-          if (sort === 'toprated') order = '| order(rating desc)';
-        } */
-      } catch (err) {}
+        const products = await client.fetch(query);
+        setState(products?.sort((a, b) => a.order - b.order));
+      } catch (err) {
+        console.error(err);
+      }
     };
 
-    fetchVinhosBranco();
-  }, []);
-
-  useEffect(() => {
-    const fetchVinhosTinto = async () => {
-      const type = "Tinto";
-      try {
-        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
-
-        const vinhosTinto = await client.fetch(query);
-        console.log(vinhosTinto?.sort((a, b) => a.order - b.order))
-        setVinhosTinto(() => vinhosTinto?.sort((a, b) => a.order - b.order));
-      } catch (err) {}
-    };
-    fetchVinhosTinto();
-  }, []);
-
-  useEffect(() => {
-    const fetchVinhoPorto = async () => {
-      const type = "Porto";
-      try {
-        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
-
-        const vinhoPorto = await client.fetch(query);
-        setVinhoPorto(() => vinhoPorto?.sort((a, b) => a.order - b.order));
-      } catch (err) {}
-    };
-    fetchVinhoPorto();
-  }, []);
-
-  useEffect(() => {
-    const fetchCadao = async () => {
-      const type = "Cadao";
-      try {
-        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
-
-        const cadao = await client.fetch(query);
-        setCadao(() => cadao?.sort((a, b) => a.order - b.order));
-      } catch (err) {}
-    };
-    fetchCadao();
-  }, []);
-
-  useEffect(() => {
-    const fetchOutros = async () => {
-      const type = "Outros";
-      try {
-        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
-
-        const outros = await client.fetch(query);
-        setOutros(() => outros?.sort((a, b) => a.order - b.order));
-      } catch (err) {}
-    };
-    fetchOutros();
-  }, []);
-
-  useEffect(() => {
-    const fetchAzeite = async () => {
-      const type = "Azeite";
-      try {
-        const query = `*[_type == "product" && references(*[_type == "category" && name == "${type}"][0]._id)]`;
-
-        const azeite = await client.fetch(query);
-        setAzeite(() => azeite?.sort((a, b) => a.order - b.order));
-      } catch (err) {}
-    };
-    fetchAzeite();
+    fetchProductsByType("Branco", setVinhosBranco);
+    fetchProductsByType("Tinto", setVinhosTinto);
+    fetchProductsByType("Porto", setVinhoPorto);
+    fetchProductsByType("Cadao", setCadao);
+    fetchProductsByType("Outros", setOutros);
+    fetchProductsByType("Azeite", setAzeite);
   }, []);
 
   return (
     <Box
-      className={"carouselwrapper"}
+      className="carouselwrapper"
       sx={{ width: 1, display: "block", minHeight: "70vh" }}
     >
-      {vinhosTinto && (
-        <CarouselContainer data={vinhosTinto} title={"Vinho Tinto"} />
+      {vinhosTinto.length > 0 && (
+        <CarouselContainer data={vinhosTinto} title="Vinho Tinto" />
       )}
-      {vinhosBranco && (
-        <CarouselContainer data={vinhosBranco} title={"Vinho Branco"} />
+      {vinhosBranco.length > 0 && (
+        <CarouselContainer data={vinhosBranco} title="Vinho Branco" />
       )}
-      {azeite && <CarouselContainer data={azeite} title={"Azeite"} />}
-      {outros && <CarouselContainer data={outros} title={"Outros"} />}
-      {vinhoPorto && <CarouselContainer data={vinhoPorto} title={"Vinho do Porto/Moscatel"} />}
+      {azeite.length > 0 && <CarouselContainer data={azeite} title="Azeite" />}
+      {outros.length > 0 && <CarouselContainer data={outros} title="Outros" />}
+      {vinhoPorto.length > 0 && (
+        <CarouselContainer data={vinhoPorto} title="Vinho do Porto/Moscatel" />
+      )}
     </Box>
   );
 };
@@ -264,6 +179,10 @@ const CarouselContainer = (props) => {
   const [moveClass, setMoveClass] = useState("");
   const [carouselItems, setCarouselItems] = useState(props?.data);
 
+  useEffect(() => {
+    const lastElement = carouselItems.pop();
+    carouselItems.unshift(lastElement);
+  }, [])
   const name =
     props.title == "Vinhos Tinto"
       ? "carouselTinto"
@@ -323,6 +242,7 @@ const CarouselContainer = (props) => {
   };
 
   const shiftPrev = (copy) => {
+    alert("prev")
     let lastcard = copy.pop();
     copy.splice(0, 0, lastcard);
     setCarouselItems(copy);
