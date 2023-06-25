@@ -1,17 +1,14 @@
-import React, { useState } from "react";
-import { urlFor } from "../lib/client";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { client } from "../lib/client";
-import { useEffect } from "react";
-import { useStateContext } from "../context/StateContext";
-import { FilterContext } from "../components/context/FiltersContext";
 import { Box } from "@mui/system";
-import Link from "next/link";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { Layout } from "../layout/Layout";
 import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import promoLogo from "../assets/promo.png";
+import { FilterContext } from "../components/context/FiltersContext";
+import { useStateContext } from "../context/StateContext";
+import { client, urlFor } from "../lib/client";
 
 const Home = ({ products, bannerData }) => {
   const filters = React.useContext(FilterContext);
@@ -242,7 +239,6 @@ const CarouselContainer = (props) => {
   };
 
   const shiftPrev = (copy) => {
-    alert("prev")
     let lastcard = copy.pop();
     copy.splice(0, 0, lastcard);
     setCarouselItems(copy);
