@@ -92,7 +92,7 @@ const Card = ({ product, key }) => {
 
   return (
     <Link href={`/product/${slug.current}`} key={slug.current}>
-      <li className="card">
+      <li className="card" style={{minWidth: '53vh'}}>
         <Box sx={{ cursor: "pointer" }}>
           <div className="product_dashboard">
             <img
